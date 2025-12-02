@@ -1,110 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Snake Mini</title>
+  <title>Tembak Musuh</title>
   <style>
     body {
-      background: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background: black;
+      margin: 0;
+      overflow: hidden;
+      cursor: crosshair;
       color: white;
       font-family: Arial;
     }
-    canvas {
-      background: #000;
-      border: 3px solid #fff;
+    #score {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 20px;
+    }
+    .enemy {
+      width: 40px;
+      height: 40px;
+      background: red;
+      position: absolute;
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
 
-<div>
-  <h2>?? Snake Mini</h2>
-  <canvas id="game" width="400" height="400"></canvas>
-  <p>Gunakan tombol panah untuk bergerak</p>
-  <h3>Skor: <span id="skor">0</span></h3>
-</div>
+<div id="score">Skor: 0</div>
 
 <script>
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+let score = 0;
 
-let box = 20;
-let snake = [{ x: 9 * box, y: 9 * box }];
-let food = {
-  x: Math.floor(Math.random() * 20) * box,
-  y: Math.floor(Math.random() * 20) * box
-};
-let direction = "RIGHT";
-let skor = 0;
+function spawnEnemy() {
+  const enemy = document.createElement("div");
+  enemy.classList.add("enemy");
 
-document.addEventListener("keydown", setDirection);
+  enemy.style.left = Math.random() * (window.innerWidth - 40) + "px";
+  enemy.style.top = Math.random() * (window.innerHeight - 40) + "px";
 
-function setDirection(event) {
-  if (event.key == "ArrowUp" && direction !== "DOWN") direction = "UP";
-  else if (event.key == "ArrowDown" && direction !== "UP") direction = "DOWN";
-  else if (event.key == "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-  else if (event.key == "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-}
+  enemy.onclick = function () {
+    score++;
+    document.getElementById("score").innerText = "Skor: " + score;
+    enemy.remove();
+  };
 
-function gameLoop() {
-  ctx.clearRect(0, 0, 400, 400);
+  document.body.appendChild(enemy);
 
-  // Gambar makanan
-  ctx.fillStyle = "red";
-  ctx.fillRect(food.x, food.y, box, box);
-
-  // Kepala snake
-  let snakeX = snake[0].x;
-  let snakeY = snake[0].y;
-
-  if (direction == "UP") snakeY -= box;
-  if (direction == "DOWN") snakeY += box;
-  if (direction == "LEFT") snakeX -= box;
-  if (direction == "RIGHT") snakeX += box;
-
-  let head = { x: snakeX, y: snakeY };
-
-  // Game over jika tabrak tembok
-  if (snakeX < 0 || snakeX >= 400 || snakeY < 0 || snakeY >= 400) {
-    alert("GAME OVER! Skor: " + skor);
-    document.location.reload();
-  }
-
-  // Jika makan makanan
-  if (snakeX == food.x && snakeY == food.y) {
-    skor++;
-    document.getElementById("skor").innerText = skor;
-    food = {
-      x: Math.floor(Math.random() * 20) * box,
-      y: Math.floor(Math.random() * 20) * box
-    };
-  } else {
-    snake.pop();
-  }
-
-  snake.unshift(head);
-
-  // Gambar snake
-  ctx.fillStyle = "lime";
-  snake.forEach(part => {
-    ctx.fillRect(part.x, part.y, box, box);
-  });
-
-  // Tabrak badan sendiri
-  for (let i = 1; i < snake.length; i++) {
-    if (snake[i].x == head.x && snake[i].y == head.y) {
-      alert("GAME OVER! Skor: " + skor);
-      document.location.reload();
+  setTimeout(() => {
+    if (document.body.contains(enemy)) {
+      enemy.remove();
     }
-  }
+  }, 2000);
 }
 
-setInterval(gameLoop, 100);
+setInterval(spawnEnemy, 800);
 </script>
 
 </body>
 </html>
+
 
