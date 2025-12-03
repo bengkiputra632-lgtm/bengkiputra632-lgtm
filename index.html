@@ -1,64 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Tembak Musuh</title>
+  <title>Link Bio Saya</title>
   <style>
     body {
-      background: black;
-      margin: 0;
-      overflow: hidden;
-      cursor: crosshair;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
+      font-family: Arial, sans-serif;
       color: white;
-      font-family: Arial;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-    #score {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 20px;
+
+    .card {
+      background: rgba(0,0,0,0.6);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      width: 280px;
     }
-    .enemy {
-      width: 40px;
-      height: 40px;
-      background: red;
-      position: absolute;
+
+    img {
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
+    }
+
+    a {
+      display: block;
+      background: #00c3ff;
+      color: black;
+      text-decoration: none;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    a:hover {
+      background: #f8971f;
     }
   </style>
 </head>
 <body>
 
-<div id="score">Skor: 0</div>
+<div class="card">
+  <img src="foto.jpg">
+  <h2>Bengki</h2>
+  <p>baik hati</p>
 
-<script>
-let score = 0;
-
-function spawnEnemy() {
-  const enemy = document.createElement("div");
-  enemy.classList.add("enemy");
-
-  enemy.style.left = Math.random() * (window.innerWidth - 40) + "px";
-  enemy.style.top = Math.random() * (window.innerHeight - 40) + "px";
-
-  enemy.onclick = function () {
-    score++;
-    document.getElementById("score").innerText = "Skor: " + score;
-    enemy.remove();
-  };
-
-  document.body.appendChild(enemy);
-
-  setTimeout(() => {
-    if (document.body.contains(enemy)) {
-      enemy.remove();
-    }
-  }, 2000);
-}
-
-setInterval(spawnEnemy, 800);
-</script>
+  <a href="https://www.instagram.com/bengki_66?igsh=MnBtMTEyZGo5dnd5>Instagram</a>
+  <a href="https://youtube.com/">YouTube</a>
+  <a href="https://tiktok.com/">TikTok</a>
+  <a href="https://wa.me/628xxxx">WhatsApp</a>
+</div>
 
 </body>
 </html>
-
-
